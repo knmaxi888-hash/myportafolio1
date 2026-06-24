@@ -25,6 +25,64 @@
   will-change: opacity, transform;
 }
 
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+  will-change: opacity, transform;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fade-up 0.6s ease-out 0.1s both;
+  will-change: opacity, transform;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.6s ease-out 0.2s both;
+  will-change: opacity, transform;
+}
+
+@keyframes scale-in {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out both;
+  will-change: opacity, transform;
+}
+
+@keyframes expand-down {
+  from { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; }
+  to { opacity: 1; max-height: 500px; padding-top: 1.25rem; padding-bottom: 1.25rem; }
+}
+
+.animate-expand {
+  animation: expand-down 0.3s ease-out both;
+  overflow: hidden;
+  will-change: opacity, max-height;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 0.5; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+.contain-layout {
+  contain: layout style;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
 body {
   margin: 0;
 }

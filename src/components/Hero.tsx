@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Mail, ArrowRight } from 'lucide-react'
 import { useTypewriter } from '../hooks/useTypewriter'
 
@@ -68,44 +67,32 @@ export default function Hero() {
   }
 
   return (
-    <div className="relative z-10 flex flex-col order-first lg:order-none w-full bg-white lg:bg-transparent pb-8 lg:pb-0 lg:min-h-screen">
+    <div className="relative z-10 flex flex-col order-first lg:order-none w-full bg-white lg:bg-transparent pb-8 lg:pb-0 lg:min-h-screen contain-layout">
       <main
         id="spade-hero"
         className="w-full max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-36 md:pb-24 lg:pt-12 lg:pb-0 lg:min-h-screen flex-1 flex flex-col justify-center"
       >
         {/* Headline with typewriter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="animate-fade-up">
           <h1 className="text-5xl md:text-6xl lg:text-[76px] font-normal tracking-tight text-black leading-[1.08] mb-8 select-none w-full whitespace-pre-wrap">
             {displayed}
             {!done && (
               <span className="inline-block w-[2px] h-[1.1em] bg-black align-middle ml-[2px] animate-blink" />
             )}
           </h1>
-        </motion.div>
+        </div>
 
         {/* Secondary description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
+        <div className="animate-fade-up-delay-1">
           <p className="text-lg md:text-xl text-[#5A635A] leading-relaxed font-normal mb-14 max-w-2xl">
             Desarrollador freelancer fullstack. Especializado en React, Node.js y TypeScript.
             <br />
             Disponible para proyectos y colaboraciones.
           </p>
-        </motion.div>
+        </div>
 
         {/* Skills pills */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <div className="animate-fade-up-delay-2">
           <h2 className="text-2xl font-medium tracking-tight mb-2 text-black">
             ¿Qué tecnologías uso?
           </h2>
@@ -117,73 +104,48 @@ export default function Hero() {
             {skills.map((skill) => {
               const isActive = selectedSkills.includes(skill)
               return (
-                <motion.button
+                <button
                   key={skill}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => toggleSkill(skill)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer border-none ${
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border-none active:scale-95 transition-all duration-200 ${
                     isActive
                       ? 'bg-[#1C2E1E] text-white shadow-md shadow-emerald-950/5'
                       : 'bg-white text-[#1C2E1E] border border-[#F1F3F1] hover:bg-[#F1F3F1]/55'
                   }`}
                 >
-                  <AnimatePresence mode="wait">
-                    {isActive && (
-                      <motion.span
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0, opacity: 0 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                      >
-                        <Check className="w-4 h-4" />
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
+                  <span className={`transition-all duration-200 ${isActive ? 'animate-scale-in' : 'hidden'}`}>
+                    <Check className="w-4 h-4" />
+                  </span>
                   {skill}
-                </motion.button>
+                </button>
               )
             })}
           </div>
 
           {/* Feedback banner */}
-          <AnimatePresence mode="wait">
-            {selectedSkills.length === 0 ? (
-              <motion.p
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                exit={{ opacity: 0 }}
-                className="italic text-xs text-[#5A635A]"
+          {selectedSkills.length === 0 ? (
+            <p className="italic text-xs text-[#5A635A] animate-fade-in">
+              Selecciona tecnologías arriba para conocer mis habilidades
+            </p>
+          ) : (
+            <div className="bg-[#FAFBF9] border border-[#F1F3F1] rounded-2xl px-6 py-5 flex flex-col gap-4 flex-wrap animate-expand">
+              <div className="flex flex-col gap-2">
+                {selectedSkills.map((skill) => (
+                  <div key={skill} className="flex items-baseline gap-2 text-sm text-[#1C2E1E]">
+                    <strong>{skill}</strong>
+                    <span className="text-[#5A635A]">— {skillDescriptions[skill]}</span>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="#contacto"
+                className="flex items-center gap-1 text-[#4D6D47] uppercase text-xs font-medium hover:opacity-70 transition-opacity no-underline self-start"
               >
-                Selecciona tecnologías arriba para conocer mis habilidades
-              </motion.p>
-            ) : (
-              <motion.div
-                key="active"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="bg-[#FAFBF9] border border-[#F1F3F1] rounded-2xl px-6 py-5 flex flex-col gap-4 flex-wrap"
-              >
-                <div className="flex flex-col gap-2">
-                  {selectedSkills.map((skill) => (
-                    <div key={skill} className="flex items-baseline gap-2 text-sm text-[#1C2E1E]">
-                      <strong>{skill}</strong>
-                      <span className="text-[#5A635A]">— {skillDescriptions[skill]}</span>
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="#contacto"
-                  className="flex items-center gap-1 text-[#4D6D47] uppercase text-xs font-medium hover:opacity-70 transition-opacity no-underline self-start"
-                >
-                  Hablemos <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                Hablemos <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          )}
+        </div>
 
         {/* Contact buttons */}
         <div

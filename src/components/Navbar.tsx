@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 
 const navLinks = ['Proyectos', 'Skills', 'Sobre mí', 'Contacto']
 
@@ -7,7 +6,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 inset-x-0 z-10 px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center bg-transparent">
+    <header className="fixed top-0 inset-x-0 z-10 px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center bg-transparent contain-layout">
       {/* Logo */}
       <a href="#" className="flex items-center gap-3 no-underline">
         <span className="text-[21px] sm:text-[26px] tracking-tight text-black font-medium select-none">
@@ -67,35 +66,27 @@ export default function Navbar() {
       </button>
 
       {/* Mobile Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9] bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center gap-8 md:hidden"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase().replace(/ /g, '-')}`}
-                className="text-3xl text-black hover:opacity-60 transition-opacity no-underline"
-                onClick={() => setIsOpen(false)}
-              >
-                {link}
-              </a>
-            ))}
+      {isOpen && (
+        <div className="fixed inset-0 z-[9] bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center gap-8 md:hidden animate-fade-in">
+          {navLinks.map((link) => (
             <a
-              href="#contacto"
-              className="text-3xl text-black underline underline-offset-2 hover:opacity-60 transition-opacity no-underline"
+              key={link}
+              href={`#${link.toLowerCase().replace(/ /g, '-')}`}
+              className="text-3xl text-black hover:opacity-60 transition-opacity no-underline"
               onClick={() => setIsOpen(false)}
             >
-              Hablemos
+              {link}
             </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+          <a
+            href="#contacto"
+            className="text-3xl text-black underline underline-offset-2 hover:opacity-60 transition-opacity no-underline"
+            onClick={() => setIsOpen(false)}
+          >
+            Hablemos
+          </a>
+        </div>
+      )}
     </header>
   )
 }
