@@ -3,47 +3,63 @@ import { useEffect, useRef } from 'react'
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260601_110537_3a579fa0-7bbc-4d94-9d25-0e816c7840f5.mp4'
 
+const SEEK_THRESHOLD = 0.02
+const SEEK_COOLDOWN_MS = 80
+
 export default function BackgroundVideo() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const prevXRef = useRef(0)
-  const isSeekingRef = useRef(false)
+  const lastSeekRef = useRef(0)
+  const pendingDeltaRef = useRef(0)
+  const rafRef = useRef(0)
 
-  // Desktop mouse scrubbing
+  // Desktop mouse scrubbing — throttled with rAF + cooldown
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
 
+    const flush = () => {
+      const now = Date.now()
+      const elapsed = now - lastSeekRef.current
+      if (elapsed < SEEK_COOLDOWN_MS || !video.duration) {
+        rafRef.current = requestAnimationFrame(flush)
+        return
+      }
+
+      const delta = pendingDeltaRef.current
+      pendingDeltaRef.current = 0
+
+      if (Math.abs(delta) > SEEK_THRESHOLD) {
+        const targetTime = Math.min(
+          Math.max(video.currentTime + delta * 0.8 * video.duration, 0),
+          video.duration
+        )
+        video.currentTime = targetTime
+        lastSeekRef.current = now
+      }
+
+      rafRef.current = requestAnimationFrame(flush)
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       if (window.innerWidth < 1024) return
-      if (!video.duration) return
-      if (isSeekingRef.current) return
 
-      const delta = e.clientX - prevXRef.current
+      const dx = e.clientX - prevXRef.current
       prevXRef.current = e.clientX
-
-      const targetTime = Math.min(
-        Math.max(video.currentTime + (delta / window.innerWidth) * 0.8 * video.duration, 0),
-        video.duration
-      )
-
-      isSeekingRef.current = true
-      video.currentTime = targetTime
+      pendingDeltaRef.current += dx / window.innerWidth
     }
 
-    const handleSeeked = () => {
-      isSeekingRef.current = false
-    }
-
+    prevXRef.current = 0
+    rafRef.current = requestAnimationFrame(flush)
     window.addEventListener('mousemove', handleMouseMove)
-    video.addEventListener('seeked', handleSeeked)
 
     return () => {
+      cancelAnimationFrame(rafRef.current)
       window.removeEventListener('mousemove', handleMouseMove)
-      video.removeEventListener('seeked', handleSeeked)
     }
   }, [])
 
-  // Mobile: no autoplay — saves bandwidth and CPU
+  // Desktop: play on mount
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
