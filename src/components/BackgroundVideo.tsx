@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260601_110537_3a579fa0-7bbc-4d94-9d25-0e816c7840f5.mp4'
@@ -12,9 +12,16 @@ export default function BackgroundVideo() {
   const lastSeekRef = useRef(0)
   const pendingDeltaRef = useRef(0)
   const rafRef = useRef(0)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  // Detect desktop once on mount
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024)
+  }, [])
 
   // Desktop mouse scrubbing — throttled with rAF + cooldown
   useEffect(() => {
+    if (!isDesktop) return
     const video = videoRef.current
     if (!video) return
 
@@ -42,8 +49,6 @@ export default function BackgroundVideo() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (window.innerWidth < 1024) return
-
       const dx = e.clientX - prevXRef.current
       prevXRef.current = e.clientX
       pendingDeltaRef.current += dx / window.innerWidth
@@ -57,25 +62,40 @@ export default function BackgroundVideo() {
       cancelAnimationFrame(rafRef.current)
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [])
+  }, [isDesktop])
 
-  // Desktop: play on mount
+  // Desktop: defer load with requestIdleCallback, then play
   useEffect(() => {
+    if (!isDesktop) return
     const video = videoRef.current
     if (!video) return
 
-    if (window.innerWidth >= 1024) {
+    const loadAndPlay = () => {
+      video.preload = 'metadata'
+      video.load()
       video.play().catch(() => {})
     }
-  }, [])
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadAndPlay, { timeout: 2000 })
+    } else {
+      setTimeout(loadAndPlay, 100)
+    }
+  }, [isDesktop])
+
+  // Don't render anything on mobile — zero DOM cost
+  if (!isDesktop) return null
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent" style={{ willChange: 'transform' }}>
+    <div
+      className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent"
+      style={{ willChange: 'transform', contain: 'paint' }}
+    >
       <video
         ref={videoRef}
         muted
         playsInline
-        preload="metadata"
+        preload="none"
         className="w-full h-full object-cover object-right lg:object-right-bottom"
       >
         <source src={VIDEO_URL} type="video/mp4" />
