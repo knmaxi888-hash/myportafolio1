@@ -68,16 +68,15 @@ export default function Hero() {
   }
 
   return (
-    <div className="relative z-10 w-full min-h-screen">
+    <div className="relative z-10 flex flex-col order-first lg:order-none w-full bg-white lg:bg-transparent pb-8 lg:pb-0 lg:min-h-screen">
       <main
         id="spade-hero"
-        className="w-full max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-36 md:pb-24 lg:pt-12 lg:pb-0 lg:min-h-screen flex flex-col justify-center gap-20 md:gap-24 lg:gap-0"
+        className="w-full max-w-7xl mx-auto px-6 pt-32 pb-20 md:pt-36 md:pb-24 lg:pt-12 lg:pb-0 lg:min-h-screen flex-1 flex flex-col justify-center"
       >
         {/* Headline with typewriter */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          whileInView={{ opacity: 0, y: -40 }}
-          viewport={{ once: false, amount: 0.7 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-5xl md:text-6xl lg:text-[76px] font-normal tracking-tight text-black leading-[1.08] mb-8 select-none w-full whitespace-pre-wrap">
@@ -90,12 +89,11 @@ export default function Hero() {
 
         {/* Secondary description */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          whileInView={{ opacity: 0, y: -40 }}
-          viewport={{ once: false, amount: 0.7 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <p className="text-lg md:text-xl text-[#5A635A] leading-relaxed font-normal max-w-2xl">
+          <p className="text-lg md:text-xl text-[#5A635A] leading-relaxed font-normal mb-14 max-w-2xl">
             Desarrollador freelancer fullstack. Especializado en React, Node.js y TypeScript.
             <br />
             Disponible para proyectos y colaboraciones.
@@ -104,10 +102,9 @@ export default function Hero() {
 
         {/* Skills pills */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          whileInView={{ opacity: 0, y: -40 }}
-          viewport={{ once: false, amount: 0.7 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h2 className="text-2xl font-medium tracking-tight mb-2 text-black">
             ¿Qué tecnologías uso?
