@@ -43,24 +43,23 @@ export default function BackgroundVideo() {
     }
   }, [])
 
-  // Mobile autoplay
+  // Mobile: no autoplay — saves bandwidth and CPU
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
 
-    if (window.innerWidth < 1024) {
-      video.autoplay = true
+    if (window.innerWidth >= 1024) {
       video.play().catch(() => {})
     }
   }, [])
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent" style={{ willChange: 'transform' }}>
       <video
         ref={videoRef}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         className="w-full h-full object-cover object-right lg:object-right-bottom"
       >
         <source src={VIDEO_URL} type="video/mp4" />

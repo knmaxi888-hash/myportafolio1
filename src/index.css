@@ -13,6 +13,18 @@
   animation: blink 1s step-end infinite;
 }
 
+@keyframes navbar-fade {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.nav-scroll-fade {
+  animation: navbar-fade linear both;
+  animation-timeline: scroll();
+  animation-range: 0px 300px;
+  will-change: opacity, transform;
+}
+
 body {
   margin: 0;
 }

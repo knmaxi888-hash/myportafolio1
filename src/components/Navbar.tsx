@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const navLinks = ['Proyectos', 'Skills', 'Sobre mí', 'Contacto']
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { scrollY } = useScroll()
-
-  const navLinksOpacity = useTransform(scrollY, [0, 300], [1, 0])
-  const navLinksTranslate = useTransform(scrollY, [0, 300], [0, -10])
 
   return (
     <header className="fixed top-0 inset-x-0 z-10 px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center bg-transparent">
@@ -23,10 +19,7 @@ export default function Navbar() {
       </a>
 
       {/* Desktop Nav Links */}
-      <motion.nav
-        style={{ opacity: navLinksOpacity, y: navLinksTranslate }}
-        className="hidden md:flex flex-row items-center gap-1 text-[23px] text-black pointer-events-auto"
-      >
+      <nav className="hidden md:flex flex-row items-center gap-1 text-[23px] text-black pointer-events-auto nav-scroll-fade">
         {navLinks.map((link, i) => (
           <span key={link} className="flex items-center">
             <a
@@ -40,16 +33,15 @@ export default function Navbar() {
             )}
           </span>
         ))}
-      </motion.nav>
+      </nav>
 
       {/* Desktop CTA */}
-      <motion.a
+      <a
         href="#contacto"
-        style={{ opacity: navLinksOpacity, y: navLinksTranslate }}
-        className="hidden md:block text-[23px] text-black underline underline-offset-2 hover:opacity-60 transition-opacity no-underline pointer-events-auto"
+        className="hidden md:block text-[23px] text-black underline underline-offset-2 hover:opacity-60 transition-opacity no-underline pointer-events-auto nav-scroll-fade"
       >
         Hablemos
-      </motion.a>
+      </a>
 
       {/* Mobile Hamburger */}
       <button
