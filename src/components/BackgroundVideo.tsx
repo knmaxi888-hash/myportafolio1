@@ -55,7 +55,7 @@ export default function BackgroundVideo() {
   }, [])
 
   return (
-    <div className="order-last lg:order-none relative lg:absolute lg:inset-0 lg:z-0 overflow-hidden pointer-events-none w-full aspect-square md:aspect-video lg:aspect-auto lg:h-full bg-neutral-50 lg:bg-transparent">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent">
       <video
         ref={videoRef}
         muted
