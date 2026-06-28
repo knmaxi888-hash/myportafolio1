@@ -84,7 +84,7 @@ export default function Hero() {
 
         {/* Secondary description */}
         <div className="animate-fade-up-delay-1">
-          <p className="text-lg md:text-xl text-[#5A635A] leading-relaxed font-normal mb-14 max-w-2xl">
+          <p className="text-lg md:text-xl text-black leading-relaxed font-normal mb-14 max-w-2xl">
             Desarrollador freelancer fullstack. Especializado en React, Node.js y TypeScript.
             <br />
             Disponible para proyectos y colaboraciones.
@@ -96,7 +96,7 @@ export default function Hero() {
           <h2 className="text-2xl font-medium tracking-tight mb-2 text-black">
             ¿Qué tecnologías uso?
           </h2>
-          <p className="opacity-85 text-[#738273] mb-8 text-sm">
+          <p className="text-black mb-8 text-sm">
             Selecciona para conocer cada habilidad
           </p>
 
@@ -124,7 +124,7 @@ export default function Hero() {
 
           {/* Feedback banner */}
           {selectedSkills.length === 0 ? (
-            <p className="italic text-xs text-[#5A635A] animate-fade-in">
+            <p className="italic text-xs text-black animate-fade-in">
               Selecciona tecnologías arriba para conocer mis habilidades
             </p>
           ) : (

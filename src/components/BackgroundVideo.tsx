@@ -77,6 +77,7 @@ export default function BackgroundVideo() {
       >
         <video
           muted
+          loop
           playsInline
           preload="none"
           className="w-full h-full object-cover object-right lg:object-right-bottom"
