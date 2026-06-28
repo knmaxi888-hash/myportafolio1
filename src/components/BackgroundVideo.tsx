@@ -69,7 +69,7 @@ export default function BackgroundVideo() {
   if (!isDesktop) return null
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none w-full h-full bg-transparent">
+    <div className="fixed top-0 left-0 z-0 w-full h-screen overflow-hidden pointer-events-none bg-transparent">
       <div
         ref={containerRef}
         className="w-full h-full"
