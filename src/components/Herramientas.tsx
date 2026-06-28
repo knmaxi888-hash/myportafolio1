@@ -1,30 +1,32 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
+const SI = 'https://cdn.simpleicons.org'
+
 const tools = [
-  { name: 'OpenCode', color: '#1C2E1E', letter: 'OC' },
-  { name: 'ChatGPT', color: '#10a37f', letter: 'GPT' },
-  { name: 'Claude Code', color: '#d97706', letter: 'CC' },
-  { name: 'VS Code', color: '#007acc', letter: 'VS' },
-  { name: 'Git', color: '#f05032', letter: 'GI' },
-  { name: 'GitHub', color: '#1C2E1E', letter: 'GH' },
-  { name: 'Docker', color: '#2496ed', letter: 'DK' },
-  { name: 'Linux', color: '#fcc624', letter: 'LX' },
-  { name: 'Node.js', color: '#339933', letter: 'NJ' },
-  { name: 'React', color: '#61dafb', letter: 'RE' },
-  { name: 'Next.js', color: '#1C2E1E', letter: 'NX' },
-  { name: 'Express', color: '#5A635A', letter: 'EX' },
-  { name: 'TypeScript', color: '#3178c6', letter: 'TS' },
-  { name: 'JavaScript', color: '#f7df1e', letter: 'JS' },
-  { name: 'HTML5', color: '#e34f26', letter: 'H5' },
-  { name: 'CSS3', color: '#1572b6', letter: 'CS' },
-  { name: 'TailwindCSS', color: '#06b6d4', letter: 'TW' },
-  { name: 'PostgreSQL', color: '#4169e1', letter: 'PG' },
-  { name: 'MongoDB', color: '#47a248', letter: 'MG' },
-  { name: 'MySQL', color: '#4479a1', letter: 'MY' },
-  { name: 'Firebase', color: '#ffca28', letter: 'FB' },
-  { name: 'Supabase', color: '#3ecf8e', letter: 'SB' },
-  { name: 'Vercel', color: '#1C2E1E', letter: 'VC' },
-  { name: 'Cloudflare', color: '#f38020', letter: 'CF' },
+  { name: 'OpenCode', icon: `${SI}/opencode/1C2E1E` },
+  { name: 'ChatGPT', icon: `${SI}/openai/10a37f` },
+  { name: 'Claude Code', icon: `${SI}/anthropic/d97706` },
+  { name: 'VS Code', icon: `${SI}/visualstudiocode/007acc` },
+  { name: 'Git', icon: `${SI}/git/f05032` },
+  { name: 'GitHub', icon: `${SI}/github/1C2E1E` },
+  { name: 'Docker', icon: `${SI}/docker/2496ed` },
+  { name: 'Linux', icon: `${SI}/linux/fcc624` },
+  { name: 'Node.js', icon: `${SI}/nodedotjs/339933` },
+  { name: 'React', icon: `${SI}/react/61dafb` },
+  { name: 'Next.js', icon: `${SI}/nextdotjs/1C2E1E` },
+  { name: 'Express', icon: `${SI}/express/5A635A` },
+  { name: 'TypeScript', icon: `${SI}/typescript/3178c6` },
+  { name: 'JavaScript', icon: `${SI}/javascript/f7df1e` },
+  { name: 'HTML5', icon: `${SI}/html5/e34f26` },
+  { name: 'CSS3', icon: `${SI}/css3/1572b6` },
+  { name: 'TailwindCSS', icon: `${SI}/tailwindcss/06b6d4` },
+  { name: 'PostgreSQL', icon: `${SI}/postgresql/4169e1` },
+  { name: 'MongoDB', icon: `${SI}/mongodb/47a248` },
+  { name: 'MySQL', icon: `${SI}/mysql/4479a1` },
+  { name: 'Firebase', icon: `${SI}/firebase/ffca28` },
+  { name: 'Supabase', icon: `${SI}/supabase/3ecf8e` },
+  { name: 'Vercel', icon: `${SI}/vercel/1C2E1E` },
+  { name: 'Cloudflare', icon: `${SI}/cloudflare/f38020` },
 ]
 
 export default function Herramientas() {
@@ -66,11 +68,13 @@ function ToolCard({ tool, index }: { tool: typeof tools[0]; index: number }) {
       }`}
       style={{ transitionDelay: `${Math.min(index * 30, 400)}ms` }}
     >
-      <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xs font-bold transition-transform duration-300 group-hover:scale-110"
-        style={{ backgroundColor: tool.color }}
-      >
-        {tool.letter}
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white border border-[#F1F3F1] transition-transform duration-300 group-hover:scale-110 p-2">
+        <img
+          src={tool.icon}
+          alt={tool.name}
+          className="w-full h-full object-contain"
+          loading="lazy"
+        />
       </div>
       <span className="text-xs text-[#5A635A] text-center leading-tight font-medium">
         {tool.name}
