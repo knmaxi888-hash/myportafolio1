@@ -26,9 +26,9 @@ export default function BackgroundVideo() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
     const animate = () => {
-      currentX = lerp(currentX, targetX, 0.08)
-      currentY = lerp(currentY, targetY, 0.08)
-      el.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.15)`
+      currentX = lerp(currentX, targetX, 0.15)
+      currentY = lerp(currentY, targetY, 0.15)
+      el.style.transform = `translate(${currentX}px, ${currentY}px) scale(1.12)`
       raf = requestAnimationFrame(animate)
     }
 
